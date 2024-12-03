@@ -1,8 +1,8 @@
 'use server'
 
 import { ID, Query } from "node-appwrite";
-import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, ENDPOINT, messaging } from "../appwrite.config";
+import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { revalidatePath } from "next/cache";
 
@@ -40,7 +40,8 @@ export const getRecentAppointmentList = async () => {
             DATABASE_ID!,
             APPOINTMENT_COLLECTION_ID!,
             [
-                Query.orderDesc('$createdAt')
+                Query.orderDesc('$createdAt'),
+                Query.notEqual('$id', 'null')
             ]
         );
         const initialCounts = {
@@ -83,11 +84,35 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
             throw new Error('Failed to update appointment');
         }
 
-        // TODO SMS NOTIFICATION
+        const smsMessage = `Hi. 
+        ${type === 'schedule'
+            ? `Your appointment with ${appointment.primaryPhysician} at ${appointment.schedule} has been scheduled.`
+            : `We regret to inform you that your appointment with ${appointment.primaryPhysician} at ${appointment.schedule} has been cancelled for the following reason: ${appointment.cancellationReason}`
+        }`
+
+        await sendSMSNotification(userId, smsMessage);
 
         revalidatePath(`/admin`)
         return parseStringify(updatedAppointment);
 
+    } catch (error) {
+      console.error(error)  
+    }
+
+}
+
+export const sendSMSNotification = async (userId: string, content: string) => {
+    try {
+        const message = await messaging.createSms(
+            ID.unique(),
+            content,
+            [],
+            [userId]
+        )
+
+        console.log(parseStringify(message))
+
+        return parseStringify(message);
     } catch (error) {
       console.error(error)  
     }

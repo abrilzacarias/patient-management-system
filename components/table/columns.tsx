@@ -20,14 +20,14 @@ export const columns: ColumnDef<Appointment>[] = [
     header: "Patient",
     cell: ({row}) => <p className="text-14-medium"> {row.original.patient.name}</p>
 },
-  {
+{
     accessorKey: "status",
     header: "Status",
-    cell: ({row}) => {
-    <div className="min-w-[115px]">
+    cell: ({row}) => (
+      <div className="min-w-[115px]">
         <StatusBadge status={row.original.status} />
-    </div>    
-    }
+      </div>    
+    )
 },
   {
     accessorKey: "schedule",
