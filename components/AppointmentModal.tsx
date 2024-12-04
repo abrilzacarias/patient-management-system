@@ -24,7 +24,9 @@ const AppointmentModal = (
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className={`capitalize ${type === 'schedule' && 'text-green-500'}`}>
+        <Button variant="ghost" className={`capitalize 
+              ${type === 'schedule' ? 'text-cyan-600 hover:text-cyan-700' : ''} 
+              ${type === 'cancel' ? 'hover:opacity-80' : ''}`}>
           {type}
         </Button>
       </DialogTrigger>

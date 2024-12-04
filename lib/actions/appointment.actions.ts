@@ -39,11 +39,12 @@ export const getRecentAppointmentList = async () => {
         const appointments = await databases.listDocuments(
             DATABASE_ID!,
             APPOINTMENT_COLLECTION_ID!,
-            [
-                Query.orderDesc('$createdAt'),
-                Query.notEqual('$id', 'null')
-            ]
         );
+
+        const sortedAppointments = appointments.documents.sort((a: any, b: any) => {
+            return new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime();
+        });
+        
         const initialCounts = {
             scheduledCounts: 0,
             pendingCounts: 0,
@@ -56,12 +57,10 @@ export const getRecentAppointmentList = async () => {
             return acc;
         }, initialCounts);
 
-        console.log(counts)
-
         const data = {
             totalCounts: appointments.total,
             ...counts,
-            documents: appointments.documents
+            documents: sortedAppointments
         }
         return parseStringify(data);
     } catch (error) {

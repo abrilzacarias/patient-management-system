@@ -35,6 +35,7 @@ interface CustomProps {
   dateFormat?: string;
   showTimeSelect?: boolean;
   children?: React.ReactNode;
+  value?: string;
   renderSkeleton?: (field: any) => React.ReactNode;
 }
 
@@ -47,6 +48,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     showTimeSelect,
     dateFormat,
     renderSkeleton,
+    value 
   } = props;
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -66,6 +68,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               placeholder={placeholder}
               {...field}
               className="shad-input border-0"
+              value={value !== undefined ? value : field.value}
             />
           </FormControl>
         </div>
@@ -79,7 +82,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             placeholder={placeholder}
             international
             withCountryCallingCode
-            value={field.value as E164Number | undefined}
+            value={value !== undefined ? value : field.value as E164Number | undefined}
             onChange={field.onChange}
             className="input-phone"
           />
@@ -90,7 +93,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
           <Image
-            src="assets/icons/calendar.svg"
+            src="/assets/icons/calendar.svg"
             height={24}
             width={24}
             alt="calendar"
@@ -119,7 +122,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger className="sha-select-trigger">
+              <SelectTrigger className="sha-select-trigger border border-dark-500 bg-dark-400">
                 <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
             </FormControl>
@@ -136,7 +139,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           <Textarea
             placeholder={placeholder}
             {...field}
-            className="shad-textarea"
+            className="shad-textarea border border-dark-500 bg-dark-400"
             disabled={props.disabled}
           />
         </FormControl>

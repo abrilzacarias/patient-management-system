@@ -9,22 +9,22 @@ export default async function NewAppointment({ params: { userId } }: SearchParam
 
   return (
     <div className="flex h-screen max-h-screen">
-      <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px] flex-1 felx-col py-10">
+      <section className="remove-scrollbar container my-auto">
+        <div className="sub-container max-w-[740px] flex-1 justify-between">
           <AppointmentForm
             type="create"
             userId={userId}
-            patientId={patient.$id}
+            patientId={patient?.$id}
           />
         </div>
 
       </section>
 
       <Image
-        src="/assets/appointment-patient.jpg"
-        height={500}
-        width={700}
-        alt="patient"
+        src="/assets/images/appointment-img.png"
+        height={1500}
+        width={1500}
+        alt="appointment"
         className="side-img max-w-[390px] bg-bottom"
         priority
       />

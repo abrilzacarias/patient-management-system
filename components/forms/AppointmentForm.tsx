@@ -31,6 +31,7 @@ const AppointmentForm = ({
 
   const AppointmentFormValidation = getAppointmentSchema(type);
 
+  //TODO PREDETERMINAR DOCTOR DEPENDIENDO DEL SELECCIONADO EN EL REGISTRO
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
@@ -120,7 +121,7 @@ const AppointmentForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
        {type === 'create' && <section className="mb-12 space-y-4">
-          <h1 className="header">New Appointment,</h1>
+          <h1 className="header">New Appointment</h1>
           <p className="text-dark-700">Request a new appointment fast and easy, with your choosen doctor.</p>
         </section>}
 
@@ -134,7 +135,7 @@ const AppointmentForm = ({
           placeholder="Select a physician"
         >
             {Doctors.map((doctor, i) => (
-                <SelectItem key={doctor.name + i} value={doctor.name}>
+                <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={doctor.name + i} value={doctor.name}>
                 <div className="flex cursor-ponter items-center gap-2">
                     {/* <Image
                     src={doctor.image}

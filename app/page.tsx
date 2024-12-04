@@ -10,14 +10,16 @@ export default function Home( {searchParams}: SearchParamProps) {
     <div className="flex h-screen max-h-screen">
     {isAdmin && <PasskeyModal />}
 
-      <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px] flex-1 felx-col py-10">
+      <section className="remove-scrollbar container my-auto">
+        <div className="sub-container max-w-[496px]">
           <PatientForm />
         </div>
 
-        <Link href="/?admin=true" className="text-green-500">
-          Admin
-        </Link>
+        <div className="flex justify-end mt-4">
+          <Link href="/?admin=true" className="text-cyan-600">
+            Admin
+          </Link>
+        </div>
       </section>
 
       <Image

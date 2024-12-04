@@ -4,6 +4,7 @@ import { getRecentAppointmentList } from '@/lib/actions/appointment.actions'
 import Link from 'next/link'
 import React from 'react'
 import {columns} from '@/components/table/columns'
+import Image from "next/image";
 
 const Admin = async () => {
     const appointments = await getRecentAppointmentList();
@@ -11,8 +12,13 @@ const Admin = async () => {
         <div className='mx-auto flex max-w-7xl flex-col space-y-14'>
         <header className="admin-header">
             <Link href='/' className='cursor-pointer'>
-                {/* logo */}
-                {/* <Image /> */}
+            <Image
+                src="/assets/icons/activity.svg"
+                height={35}
+                width={35}
+                alt="icon"
+                priority
+            />
             </Link>
 
             <p className="text-16-semibold">Admin Dashboard</p>

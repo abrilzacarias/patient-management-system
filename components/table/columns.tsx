@@ -18,7 +18,7 @@ export const columns: ColumnDef<Appointment>[] = [
  {
     accessorKey: "patient",
     header: "Patient",
-    cell: ({row}) => <p className="text-14-medium"> {row.original.patient.name}</p>
+    cell: ({row}) => <p className="text-14-medium capitalize"> {row.original.patient.name}</p>
 },
 {
     accessorKey: "status",
@@ -42,13 +42,13 @@ export const columns: ColumnDef<Appointment>[] = [
     
         return (
             <div className="flex items-center gap-3">
-                <Image 
+                {/* <Image 
                     src={doctor?.image}
                     height={100}
                     width={100}
                     alt={doctor?.name}
                     className="size-8"
-                />
+                /> */}
                 <p className="whitespace-nowrap">
                     Dr. {doctor?.name}
                 </p>

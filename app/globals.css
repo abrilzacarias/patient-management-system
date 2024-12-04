@@ -74,7 +74,7 @@
 
   /* ==== SUCCESS */
   .success-img {
-    @apply m-auto flex flex-1 flex-col items-center justify-between gap-10 py-10;
+    @apply flex flex-1 flex-col items-center justify-between gap-10 py-10;
   }
 
   .request-details {
@@ -183,7 +183,7 @@
 
   /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
-    @apply bg-green-500 text-white !important;
+    @apply bg-cyan-600 text-white !important;
   }
 
   .shad-danger-btn {
@@ -318,13 +318,13 @@
 }
 
 .react-datepicker__day--selected {
-  background-color: #24ae7c !important;
+  background-color: #0A92B4 !important;
   color: #ffffff !important;
   border-radius: 4px;
 }
 
 .react-datepicker__time-list-item--selected {
-  background-color: #24ae7c !important;
+  background-color: #0A92B4 !important;
 }
 
 .react-datepicker__time-container {

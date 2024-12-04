@@ -27,9 +27,9 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
@@ -75,7 +75,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         className="space-y-12 flex-1"
       >
         <section className="space-y-4">
-          <h1 className="header">Welcome</h1>
+          <h1 className="header">Welcome,</h1>
           <p className="text-dark-700">Let us know more about yourself.</p>
         </section>
 
@@ -89,7 +89,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="name"
-          label="Full name"
+          label="Full name *"
           placeholder="John Doe"
           iconSrc="/assets/user.svg"
           iconAlt="user"
@@ -100,7 +100,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="email"
-            label="Email"
+            label="Email *"
             placeholder="johndoe@example.com"
             iconSrc="/assets/email.svg"
             iconAlt="email"
@@ -110,7 +110,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
             name="phone"
-            label="Phone Number"
+            label="Phone Number *"
             placeholder="555-555-5555"
           />
         </div>
@@ -120,14 +120,14 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.DATE_PICKER}
             control={form.control}
             name="birthDate"
-            label="Date of Birth"
+            label="Date of Birth *"
           />
 
           <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
             name="gender"
-            label="Gender"
+            label="Gender *"
             renderSkeleton={(field) => (
               <FormControl>
                 <RadioGroup
@@ -154,7 +154,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="address"
-            label="Address"
+            label="Address *"
             placeholder="14th Street"
           />
 
@@ -162,7 +162,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="occupation"
-            label="Occupation"
+            label="Occupation *"
             placeholder="Teacher"
           />
         </div>
@@ -172,7 +172,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="emergencyContactName"
-            label="Emergency contact name"
+            label="Emergency contact name *"
             placeholder="Guardian"
           />
 
@@ -180,7 +180,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
             name="emergencyContactNumber"
-            label="Emergency contact phone number"
+            label="Emergency contact phone number *"
             placeholder="555-555-5555"
           />
         </div>
@@ -195,11 +195,11 @@ const RegisterForm = ({ user }: { user: User }) => {
           fieldType={FormFieldType.SELECT}
           control={form.control}
           name="primaryPhysician"
-          label="Primary Physician"
+          label="Primary Physician *"
           placeholder="Select a physician"
         >
           {Doctors.map((doctor, i) => (
-            <SelectItem key={doctor.name + i} value={doctor.name}>
+            <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={doctor.name + i} value={doctor.name}>
               <div className="flex cursor-ponter items-center gap-2">
                 {/* <Image
                   src={doctor.image}
@@ -219,14 +219,14 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="insuranceProvider"
-            label="Insurance provider"
+            label="Insurance provider *"
             placeholder="MediCare"
           />
 
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="insurancePolicyNumber"
+            name="insurancePolicyNumber *"
             label="Insurance policy number"
             placeholder="AB789456"
           />
@@ -282,7 +282,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           placeholder="Select a type"
         >
           {IdentificationTypes.map((type) => (
-            <SelectItem key={type} value={type}>
+            <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={type} value={type}>
               {type}
             </SelectItem>
           ))}
@@ -318,21 +318,21 @@ const RegisterForm = ({ user }: { user: User }) => {
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="treatmentConsent"
-          label="I consent to treatment."
+          label="I consent to treatment. *"
         ></CustomFormField>
 
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="disclosureConsent"
-          label="I consent to disclosure of my personal information."
+          label="I consent to disclosure of my personal information. *"
         ></CustomFormField>
 
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="privacyConsent"
-          label="I consent to the privacy policy."
+          label="I consent to the privacy policy. *"
         ></CustomFormField>
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>

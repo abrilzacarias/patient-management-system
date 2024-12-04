@@ -32,7 +32,7 @@ const FileUploader = ({files, onChange}: FileUploaderProps) =>  {
             height={40} />
             <div className='file-upload_label'>
                 <p className='text-14-regular'>
-                    <span className='text-green-500'>Click to upload</span> or drag and drop
+                    <span className='text-cyan-600'>Click to upload</span> or drag and drop
                 </p>
                 <p>SVG, PNG, JPG (max. 800x400px)</p>
             </div>
