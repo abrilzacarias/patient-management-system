@@ -8,7 +8,10 @@ import { formatDateTime } from "@/lib/utils"
 import { Doctors } from "@/constants"
 import Image from "next/image";
 import AppointmentModal from "../AppointmentModal"
-import { Appointment } from "@/types/appwrite.types"
+import { Appointment, Doctor } from "@/types/appwrite.types"
+import { useEffect, useState } from "react"
+import { DoctorCell } from "../DoctorCell"
+
 
 export const columns: ColumnDef<Appointment>[] = [
  {
@@ -38,24 +41,23 @@ export const columns: ColumnDef<Appointment>[] = [
     accessorKey: "primaryPhysician",
     header: "Doctor",
     cell: ({row}) => {
-        const doctor = Doctors.find((doctor) => doctor.name === row.original.primaryPhysician)
-    
-        return (
-            <div className="flex items-center gap-3">
-                {/* <Image 
-                    src={doctor?.image}
-                    height={100}
-                    width={100}
-                    alt={doctor?.name}
-                    className="size-8"
-                /> */}
-                <p className="whitespace-nowrap">
-                    Dr. {doctor?.name}
-                </p>
+  
+      return (
+          <div className="flex items-center gap-3">
+              <Image 
+                  src={(row.original.primaryPhysician as Doctor).identificationDocumentUrl}
+                  height={100}
+                  width={100}
+                  alt={(row.original.primaryPhysician as Doctor).name}
+                  className="size-8"
+              />
+              <p className="whitespace-nowrap">
+                  Dr. {(row.original.primaryPhysician as Doctor).name}
+              </p>
 
-            </div>
-        )
-    }
+          </div>
+      )
+  }
   },
   {
     id: "actions",
@@ -65,13 +67,13 @@ export const columns: ColumnDef<Appointment>[] = [
         <div className="flex gap-1">
             <AppointmentModal 
               type="schedule"
-              patientId={data.patient.$id}
+              patient={data.patient}
               userId={data.userId}
               appointment={data}
             />
             <AppointmentModal 
               type="cancel"
-              patientId={data.patient.$id}
+              patient={data.patient}
               userId={data.userId}
               appointment={data}
             />
@@ -80,3 +82,43 @@ export const columns: ColumnDef<Appointment>[] = [
     },
   },
 ]
+
+export const columnsDoctor: ColumnDef<Doctor>[] = [
+  {
+     header: "ID",
+     cell: ({row}) => <p className="text-14-medium"> {row.index + 1}</p>
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({row}) => {
+      const [imgError, setImgError] = useState(false);
+      return (
+        <div className="flex items-center gap-3">
+          <div className="relative w-10 h-10 flex-shrink-0">
+            {!imgError ? (
+              <Image
+                src={row.original.identificationDocumentUrl}
+                alt={`Dr. ${row.original.name}`}
+                fill
+                style={{ objectFit: 'cover' }}
+                className="rounded-full"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-full">
+                <span className="text-gray-500 text-xs">No img</span>
+              </div>
+            )}
+          </div>
+          <p className="text-14-medium capitalize">{row.original.name}</p>
+        </div>
+      )
+    }
+  },
+  {
+    accessorKey: "specialty",
+    header: "Specialty",
+    cell: ({row}) => <p className="text-14-medium capitalize"> {row.original.specialty}</p>
+  },
+ ]

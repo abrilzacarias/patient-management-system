@@ -19,8 +19,9 @@ import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import FileUploader from "../FileUploader";
 import { blob } from "stream/consumers";
+import { Doctor } from "@/types/appwrite.types";
 
-const RegisterForm = ({ user }: { user: User }) => {
+const RegisterForm = ({ user, doctors }: { user: User, doctors: Doctor[] }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof PatientFormValidation>>({
@@ -35,6 +36,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
+    console.log('Form submitted with values:', values);
 
     let formData;
 
@@ -57,7 +59,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         birthDate: new Date(values.birthDate),
         identificationDocument: formData,
       }
-      console.log(patientData)
+      //console.log(patientData)
 
 
       // @ts-ignore
@@ -198,17 +200,17 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Primary Physician *"
           placeholder="Select a physician"
         >
-          {Doctors.map((doctor, i) => (
-            <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={doctor.name + i} value={doctor.name}>
+          {doctors.map((doctor: Doctor) => (
+            <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={doctor.$id} value={doctor.$id}>
               <div className="flex cursor-ponter items-center gap-2">
-                {/* <Image
-                  src={doctor.image}
+                <Image
+                  src={doctor?.identificationDocumentUrl || "/assets/icons/user.svg"}
                   alt={doctor.name}
                   width={32}
                   height={32}
                   className="rounded-full border border-dark-500"
-                /> */}
-                <p>{doctor.name}</p>
+                />
+                <p>{doctor.name} - {doctor.specialty}</p>
               </div>
             </SelectItem>
           ))}
@@ -226,8 +228,8 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="insurancePolicyNumber *"
-            label="Insurance policy number"
+            name="insurancePolicyNumber"
+            label="Insurance policy number *"
             placeholder="AB789456"
           />
         </div>

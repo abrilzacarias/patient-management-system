@@ -1,11 +1,13 @@
 import AppointmentForm from "@/components/forms/AppointmentForm";
 import PatientForm from "@/components/forms/PatientForm";
+import { getDoctors } from "@/lib/actions/doctor.actions";
 import { getPatient } from "@/lib/actions/patient.actions";
 import Link from "next/dist/client/link";
 import Image from "next/image";
 
 export default async function NewAppointment({ params: { userId } }: SearchParamProps) {
   const patient = await getPatient(userId);
+  const doctors = await getDoctors();
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -14,7 +16,8 @@ export default async function NewAppointment({ params: { userId } }: SearchParam
           <AppointmentForm
             type="create"
             userId={userId}
-            patientId={patient?.$id}
+            patient={patient}
+            doctors={doctors}
           />
         </div>
 

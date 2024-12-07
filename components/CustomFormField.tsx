@@ -164,7 +164,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
 };
 
 function CustomFormField(props: CustomProps) {
-  const { control, fieldType, name, label } = props;
+  const { control, fieldType, name, label, placeholder } = props;
   return (
     <FormField
       control={control}

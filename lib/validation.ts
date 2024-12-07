@@ -11,6 +11,32 @@ export const UserFormValidation = z.object({
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
 });
 
+export const DoctorFormValidation = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters"),
+  specialty: z.enum([
+    "Cardiology",
+    "Dermatology",
+    "Endocrinology",
+    "Gastroenterology",
+    "Gynecology",
+    "Internal Medicine",
+    "Neurology",
+    "Oncology",
+    "Ophthalmology",
+    "Orthopedics",
+    "Pediatrics",
+    "Psychiatry",
+    "Family Medicine",
+    "Obstetrics",
+    "Radiology",
+    "Surgery"
+  ] as const),
+  identificationDocument: z.custom<File[]>().optional(),
+});
+
 export const PatientFormValidation = z.object({
   name: z
     .string()
@@ -40,7 +66,7 @@ export const PatientFormValidation = z.object({
       (emergencyContactNumber) => /^\+\d{10,15}$/.test(emergencyContactNumber),
       "Invalid phone number"
     ),
-  primaryPhysician: z.string().min(2, "Select at least one doctor"),
+  primaryPhysician: z.string().nullable(),
   insuranceProvider: z
     .string()
     .min(2, "Insurance name must be at least 2 characters")

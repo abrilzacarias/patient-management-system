@@ -5,9 +5,14 @@ import Link from 'next/link'
 import React from 'react'
 import {columns} from '@/components/table/columns'
 import Image from "next/image";
+import { Button } from '@/components/ui/button'
+import DoctorModal from '@/components/DoctorModal'
+import { getDoctors } from '@/lib/actions/doctor.actions'
 
 const Admin = async () => {
     const appointments = await getRecentAppointmentList();
+    const doctors = await getDoctors();
+
     return (
         <div className='mx-auto flex max-w-7xl flex-col space-y-14'>
         <header className="admin-header">
@@ -23,11 +28,19 @@ const Admin = async () => {
 
             <p className="text-16-semibold">Admin Dashboard</p>
         </header>
+
         <main className="admin-main">
-            <section className="w-full space-y-4">
-                <h1 className="header">Welcome!</h1>
-                <p className="text-dark-700">Manage the appointments.</p>
+            <section className="w-full flex items-center justify-between">
+                <div>
+                    <h1 className="header py-4">Welcome!</h1>
+                    <p className="text-dark-700">Manage the appointments.</p>
+                </div>
+
+                <div>
+                    <DoctorModal doctors={doctors} />
+                </div>
             </section>
+
 
             <section className="admin-stat">
                 <StatCard 

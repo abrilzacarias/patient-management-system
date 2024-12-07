@@ -9,17 +9,22 @@ import {
 import { useState } from "react"
 import { Button } from "./ui/button"
 import { PatientFormValidation } from "@/lib/validation"
-import { Appointment } from "@/types/appwrite.types"
+import { Appointment, Patient } from "@/types/appwrite.types"
 import AppointmentForm from "./forms/AppointmentForm"
 import Image from "next/image";
+import { useDoctors } from "@/hooks/useDoctors";
+
 const AppointmentModal = (
-  { type, patientId, userId, appointment }: 
-  { type: 'schedule' | 'cancel' ,
-  patientId: string,
-  userId: string,
-  appointment?: Appointment
-}) => {
+    { type, patient, userId, appointment }: 
+    { type: 'schedule' | 'cancel' ,
+    patient: Patient,
+    userId: string,
+    appointment?: Appointment
+  }) => {
   const [open, setOpen] = useState(false)
+  const doctors = useDoctors();
+  
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -40,10 +45,11 @@ const AppointmentModal = (
 
         <AppointmentForm 
           userId={userId}
-          patientId={patientId}
+          patient={patient}
           type={type}
           appointment={appointment}
           setOpen={setOpen}
+          doctors={doctors}
         />
       </DialogContent>
     </Dialog>

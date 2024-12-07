@@ -83,17 +83,17 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
             throw new Error('Failed to update appointment');
         }
 
+        const newAppointment = parseStringify(updatedAppointment)
         const smsMessage = `Hi. 
         ${type === 'schedule'
-            ? `Your appointment with ${appointment.primaryPhysician} at ${appointment.schedule} has been scheduled.`
-            : `We regret to inform you that your appointment with ${appointment.primaryPhysician} at ${appointment.schedule} has been cancelled for the following reason: ${appointment.cancellationReason}`
+            ? `Your appointment with ${newAppointment.primaryPhysician.name} at ${appointment.schedule} has been scheduled.`
+            : `We regret to inform you that your appointment with ${newAppointment.primaryPhysician.name} at ${appointment.schedule} has been cancelled for the following reason: ${appointment.cancellationReason}`
         }`
 
         await sendSMSNotification(userId, smsMessage);
 
         revalidatePath(`/admin`)
-        return parseStringify(updatedAppointment);
-
+        return newAppointment;
     } catch (error) {
       console.error(error)  
     }

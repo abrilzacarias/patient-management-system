@@ -7,6 +7,23 @@ declare type SearchParamProps = {
 
 declare type Gender = "male" | "female" | "other";
 declare type Status = "pending" | "scheduled" | "cancelled";
+declare type MedicalSpecialty = 
+| "Cardiology"
+| "Dermatology"
+| "Endocrinology"
+| "Gastroenterology"
+| "Gynecology"
+| "Internal Medicine"
+| "Neurology"
+| "Oncology"
+| "Ophthalmology"
+| "Orthopedics"
+| "Pediatrics"
+| "Psychiatry"
+| "Family Medicine"
+| "Obstetrics"
+| "Radiology"
+| "Surgery";
 
 declare interface CreateUserParams {
   name: string;

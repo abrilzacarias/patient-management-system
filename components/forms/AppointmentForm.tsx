@@ -15,27 +15,28 @@ import { Doctors } from "@/constants/index";
 import { SelectItem } from "../ui/select";
 import { create } from "domain";
 import { createAppointment, updateAppointment } from "@/lib/actions/appointment.actions";
-import { Appointment } from "@/types/appwrite.types";
+import { Appointment, Doctor, Patient } from "@/types/appwrite.types";
+import Image from "next/image";
 
 const AppointmentForm = ({
-    userId, patientId, type, appointment, setOpen
+    userId, patient, type, appointment, doctors, setOpen
 }: {
     userId: string;
-    patientId: string;
+    patient: Patient;
     type: "create" | "cancel" | "schedule";
+    doctors: Doctor[];
     appointment?: Appointment;
-    setOpen: (open: boolean) => void
+    setOpen?: (open: boolean) => void
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const AppointmentFormValidation = getAppointmentSchema(type);
 
-  //TODO PREDETERMINAR DOCTOR DEPENDIENDO DEL SELECCIONADO EN EL REGISTRO
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      primaryPhysician: appointment ? appointment.primaryPhysician : '',
+      primaryPhysician: appointment?.primaryPhysician?.$id || patient.primaryPhysician.$id,
       schedule: appointment ? new Date(appointment.schedule) : new Date(Date.now()),
       reason: appointment ? appointment.reason : '',
       note: appointment?.note || '',
@@ -59,10 +60,10 @@ const AppointmentForm = ({
       }
 
     try {
-        if (type === "create" && patientId) {
+        if (type === "create" && patient) {
             const appointmentData = {
                 userId,
-                patient: patientId,
+                patient: patient.$id,
                 primaryPhysician: values.primaryPhysician,
                 schedule: new Date(values.schedule),
                 reason: values.reason!,
@@ -98,7 +99,6 @@ const AppointmentForm = ({
     } catch (error) {
         console.error(error);
       }
-      setIsLoading(false);
     }
 
   let buttonLabel;
@@ -134,17 +134,17 @@ const AppointmentForm = ({
           label="Select a doctor"
           placeholder="Select a physician"
         >
-            {Doctors.map((doctor, i) => (
-                <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={doctor.name + i} value={doctor.name}>
+            {doctors.map((doctor) => (
+                <SelectItem className="cursor-pointer hover:bg-dark-300 hover:text-cyan-600" key={doctor.$id} value={doctor.$id}>
                 <div className="flex cursor-ponter items-center gap-2">
-                    {/* <Image
-                    src={doctor.image}
+                    <Image
+                    src={doctor.identificationDocumentUrl}
                     alt={doctor.name}
                     width={32}
                     height={32}
                     className="rounded-full border border-dark-500"
-                    /> */}
-                    <p>{doctor.name}</p>
+                    />
+                    <p>{doctor.name} - {doctor.specialty}</p>
                 </div>
                 </SelectItem>
           ))}

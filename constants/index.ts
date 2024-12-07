@@ -11,7 +11,7 @@ export const PatientFormDefaultValues = {
   occupation: "",
   emergencyContactName: "",
   emergencyContactNumber: "",
-  primaryPhysician: "",
+  primaryPhysician: null,
   insuranceProvider: "",
   insurancePolicyNumber: "",
   allergies: "",
@@ -80,3 +80,21 @@ export const StatusIcon = {
   cancelled: "/assets/icons/cancelled.svg",
 };
 
+export const SpecialtyOptions = [
+  "Cardiology",
+  "Dermatology",
+  "Endocrinology",
+  "Gastroenterology",
+  "Gynecology",
+  "Internal Medicine",
+  "Neurology",
+  "Oncology",
+  "Ophthalmology",
+  "Orthopedics",
+  "Pediatrics",
+  "Psychiatry",
+  "Family Medicine",
+  "Obstetrics",
+  "Radiology",
+  "Surgery"
+];

@@ -16,7 +16,7 @@ export default function Home( {searchParams}: SearchParamProps) {
         </div>
 
         <div className="flex justify-end mt-4">
-          <Link href="/?admin=true" className="text-cyan-600">
+          <Link href="/?admin=true" className="text-cyan-600 hover:text-cyan-700">
             Admin
           </Link>
         </div>
