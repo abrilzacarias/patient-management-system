@@ -8,10 +8,8 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react"
 import { Button } from "./ui/button"
-import { PatientFormValidation } from "@/lib/validation"
 import { Appointment, Patient } from "@/types/appwrite.types"
 import AppointmentForm from "./forms/AppointmentForm"
-import Image from "next/image";
 import { useDoctors } from "@/hooks/useDoctors";
 
 const AppointmentModal = (

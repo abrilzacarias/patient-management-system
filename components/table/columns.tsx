@@ -1,16 +1,12 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "../ui/button"
-import { MoreHorizontal } from "lucide-react"
 import StatusBadge from "../StatusBadge"
 import { formatDateTime } from "@/lib/utils"
-import { Doctors } from "@/constants"
 import Image from "next/image";
 import AppointmentModal from "../AppointmentModal"
 import { Appointment, Doctor } from "@/types/appwrite.types"
-import { useEffect, useState } from "react"
-import { DoctorCell } from "../DoctorCell"
+import { useState } from "react"
 
 
 export const columns: ColumnDef<Appointment>[] = [

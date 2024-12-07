@@ -3,22 +3,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { PatientFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser, registerPatient } from "@/lib/actions/patient.actions";
+import { registerPatient } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants/index";
+import { GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants/index";
 import { Label } from "../ui/label";
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import FileUploader from "../FileUploader";
-import { blob } from "stream/consumers";
 import { Doctor } from "@/types/appwrite.types";
 
 const RegisterForm = ({ user, doctors }: { user: User, doctors: Doctor[] }) => {

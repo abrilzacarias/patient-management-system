@@ -5,7 +5,6 @@ import Link from 'next/link'
 import React from 'react'
 import {columns} from '@/components/table/columns'
 import Image from "next/image";
-import { Button } from '@/components/ui/button'
 import DoctorModal from '@/components/DoctorModal'
 import { getDoctors } from '@/lib/actions/doctor.actions'
 

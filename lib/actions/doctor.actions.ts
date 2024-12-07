@@ -1,7 +1,6 @@
 "use server"
 
 import { ID, Query } from "node-appwrite"
-import { parse } from "path"
 import { parseStringify } from "../utils"
 import { BUCKET_ID, DATABASE_ID, databases, DOCTOR_COLLECTION_ID, ENDPOINT, PROJECT_ID, storage } from "../appwrite.config"	
 import { InputFile } from "node-appwrite/file"

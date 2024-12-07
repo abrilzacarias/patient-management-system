@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
@@ -12,12 +11,9 @@ import { DoctorFormValidation, PatientFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { registerDoctor } from "@/lib/actions/doctor.actions";
 import { FormFieldType } from "./PatientForm";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues, SpecialtyOptions } from "@/constants/index";
-import { Label } from "../ui/label";
+import { SpecialtyOptions } from "@/constants/index";
 import { SelectItem } from "@/components/ui/select";
 import FileUploader from "../FileUploader";
-import { blob } from "stream/consumers";
 
 const DoctorForm = () => {
   const router = useRouter();

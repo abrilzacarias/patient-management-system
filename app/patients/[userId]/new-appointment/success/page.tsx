@@ -2,7 +2,6 @@ import Link from 'next/link'
 import React from 'react'
 import Image from "next/image";
 import { getAppointment } from '@/lib/actions/appointment.actions';
-import { Doctors } from '@/constants';
 import { formatDateTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
