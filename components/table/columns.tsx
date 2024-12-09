@@ -91,23 +91,16 @@ export const columnsDoctor: ColumnDef<Doctor>[] = [
       const [imgError, setImgError] = useState(false);
       return (
         <div className="flex items-center gap-3">
-          <div className="relative w-10 h-10 flex-shrink-0">
-            {!imgError ? (
-              <Image
-                src={row.original.identificationDocumentUrl}
-                alt={`Dr. ${row.original.name}`}
-                fill
-                style={{ objectFit: 'cover' }}
-                className="rounded-full"
-                onError={() => setImgError(true)}
+          <Image 
+                  src={row.original.identificationDocumentUrl}
+                  height={100}
+                  width={100}
+                  alt={row.original.name}
+                  className="size-8"
               />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-full">
-                <span className="text-gray-500 text-xs">No img</span>
-              </div>
-            )}
-          </div>
-          <p className="text-14-medium capitalize">{row.original.name}</p>
+              <p className="whitespace-nowrap">
+                  Dr. {row.original.name}
+              </p>
         </div>
       )
     }

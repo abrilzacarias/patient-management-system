@@ -73,10 +73,6 @@ const DoctorForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6 flex-1"
       >
-        <section className="space-y-2">
-          <h1 className="header">Add a new doctor</h1>
-          <p className="text-dark-700">Fill the form to add a new doctor.</p>
-        </section>
 
             <CustomFormField
             fieldType={FormFieldType.INPUT}

@@ -49,6 +49,10 @@ const DoctorsModal = ({ doctors }: { doctors: Doctor[] }) => {
 
       <Dialog open={openAdd} onOpenChange={setOpenAdd}>
         <DialogContent className="shad-dialog overflow-y-auto max-h-[90vh]">
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="header">Add a new doctor</DialogTitle>
+            <DialogDescription className="text-dark-700">Fill the form to add a new doctor.</DialogDescription>
+          </DialogHeader>
 
           <DoctorForm />
 

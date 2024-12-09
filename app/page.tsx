@@ -1,8 +1,9 @@
 import PatientForm from "@/components/forms/PatientForm";
-import PasskeyModal from "@/components/PasskeyModal";
 import Link from "next/dist/client/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
+const PasskeyModal = dynamic(() => import("@/components/PasskeyModal"), { ssr: false });
 export default function Home( {searchParams}: SearchParamProps) {
   const isAdmin = searchParams?.admin === "true";
 
@@ -23,12 +24,13 @@ export default function Home( {searchParams}: SearchParamProps) {
       </section>
 
       <Image
-        src="/assets/home-patient.jpg"
+        src="/assets/home-patient.webp"
         height={500}
         width={700}
         alt="patient"
         className="side-img max-w-[50%]"
         priority
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 700px"
       />
     </div>
   );
