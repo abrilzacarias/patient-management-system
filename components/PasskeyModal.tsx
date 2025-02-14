@@ -15,13 +15,13 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import Image from "next/image";
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { decryptKey, encryptKey } from '@/lib/utils';
 import Cookies from "js-cookie";
 
 function PasskeyModal() {
   const router = useRouter();
-  const pathname = usePathname();
+  const [open, setOpen] = useState(true);
   const [passkey, setPasskey] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -32,11 +32,20 @@ function PasskeyModal() {
     if (encryptedKey) {
       const accessKey = decryptKey(encryptedKey);
       
-      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY && pathname !== "/admin") {
+      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+        setOpen(true);
+        setIsLoading(true);
         router.push('/admin'); 
       }
     }
-  }, [router, pathname]);
+  }, [router]);
+
+  const closeModal = () => {
+    if (!isLoading) {
+      setOpen(false);
+      router.push('/');
+    }
+  };
 
   const validatePasskey = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -47,9 +56,8 @@ function PasskeyModal() {
         const encryptedKey = encryptKey(passkey);
         Cookies.set("accessKey", encryptedKey, { expires: 1, secure: true });
 
-        if (pathname !== "/admin") {
-          router.push("/admin");
-        }
+        setError('');
+        router.push("/admin");
       } else {
         setError("Invalid Passkey, try again.");
         setIsLoading(false);
@@ -58,21 +66,24 @@ function PasskeyModal() {
   };
 
   return (
-    <AlertDialog open={true}> 
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className='shad-alert-dialog'>
         <AlertDialogHeader>
           <AlertDialogTitle className='flex items-start justify-between'>
             Admin Access Verification
-            <Image 
-              src="/assets/icons/close.svg"
-              height={20}
-              width={20}
-              alt="close"
-              className='cursor-pointer'
-            />
+            {!isLoading && (
+              <Image 
+                src="/assets/icons/close.svg"
+                height={20}
+                width={20}
+                alt="close"
+                onClick={closeModal}
+                className='cursor-pointer'
+              />
+            )}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            To access the admin page, enter the passkey.
+            {isLoading ? "Verifying access, please wait..." : "To access the admin page, enter the passkey."}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
