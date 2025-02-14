@@ -1,5 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
 import PatientForm from "@/components/forms/PatientForm";
-import Link from "next/dist/client/link";
+import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
@@ -13,15 +16,25 @@ export default function Home( {searchParams}: SearchParamProps) {
     {isAdmin && <PasskeyModal />}
 
       <section className="remove-scrollbar container my-auto">
-        <div className="sub-container max-w-[496px]">
+        <motion.div
+          className="sub-container max-w-[496px]"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <PatientForm />
-        </div>
+        </motion.div>
 
-        <div className="flex justify-end mt-4">
+        <motion.div
+          className="flex justify-end mt-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
           <Link href="/?admin=true" className="text-cyan-600 hover:text-cyan-700">
             Admin
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       <Image

@@ -3,6 +3,8 @@ import type { NextRequest } from "next/server";
 import { decryptKey } from "@/lib/utils"; 
 
 export function middleware(req: NextRequest) {
+  if (req.method !== "GET") return NextResponse.next();
+
   const encryptedKey = req.cookies.get("accessKey")?.value || "";
 
   if (!encryptedKey) {
@@ -17,7 +19,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  console.log("🟢 Clave correcta, permitiendo acceso...");
+  console.log("🟢 Correct key, allowing access...");
   return NextResponse.next();
 }
 

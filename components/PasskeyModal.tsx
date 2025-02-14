@@ -15,15 +15,16 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { decryptKey, encryptKey } from '@/lib/utils';
 import Cookies from "js-cookie";
 
 function PasskeyModal() {
   const router = useRouter();
+  const pathname = usePathname();
   const [passkey, setPasskey] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Estado de carga
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const encryptedKey = Cookies.get("accessKey");
@@ -31,30 +32,33 @@ function PasskeyModal() {
     if (encryptedKey) {
       const accessKey = decryptKey(encryptedKey);
       
-      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-        router.push('/admin'); // ✅ Redirección directa si ya está autenticado
+      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY && pathname !== "/admin") {
+        router.push('/admin'); 
       }
     }
-  }, [router]);
+  }, [router, pathname]);
 
   const validatePasskey = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsLoading(true); // ⏳ Inicia la carga
+    setIsLoading(true);
 
     setTimeout(() => {
       if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
         const encryptedKey = encryptKey(passkey);
         Cookies.set("accessKey", encryptedKey, { expires: 1, secure: true });
-        router.push("/admin");
+
+        if (pathname !== "/admin") {
+          router.push("/admin");
+        }
       } else {
         setError("Invalid Passkey, try again.");
-        setIsLoading(false); // ❌ Detener la carga si la clave es incorrecta
+        setIsLoading(false);
       }
-    }, 1500); // Simula un pequeño delay para mejor UX
+    }, 1500);
   };
 
   return (
-    <AlertDialog open={true}> {/* ✅ Mantiene el modal abierto */}
+    <AlertDialog open={true}> 
       <AlertDialogContent className='shad-alert-dialog'>
         <AlertDialogHeader>
           <AlertDialogTitle className='flex items-start justify-between'>
