@@ -4,6 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 const PasskeyModal = dynamic(() => import("@/components/PasskeyModal"), { ssr: false });
+
 export default function Home( {searchParams}: SearchParamProps) {
   const isAdmin = searchParams?.admin === "true";
 
